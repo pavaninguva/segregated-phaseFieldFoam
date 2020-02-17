@@ -39,7 +39,7 @@ Description
 
 #include "fvCFD.H"
 #include "dynamicFvMesh.H"
-#include "CMULES.H"
+// #include "CMULES.H" 
 #include "EulerDdtScheme.H"
 #include "localEulerDdtScheme.H"
 #include "CrankNicolsonDdtScheme.H"
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     #include "initContinuityErrs.H"
     #include "createDyMControls.H"
     #include "createFields.H"
-    #include "createAlphaFluxes.H"
+    // #include "createAlphaFluxes.H"
     #include "initCorrectPhi.H"
     #include "createUfIfPresent.H"
 
@@ -117,10 +117,10 @@ int main(int argc, char *argv[])
                 {
                     // Do not apply previous time-step mesh compression flux
                     // if the mesh topology changed
-                    if (mesh.topoChanging())
-                    {
-                        talphaPhi1Corr0.clear();
-                    }
+                    // if (mesh.topoChanging())
+                    // {
+                    //     talphaPhi1Corr0.clear();
+                    // }
 
                     gh = (g & mesh.C()) - ghRef;
                     ghf = (g & mesh.Cf()) - ghRef;
