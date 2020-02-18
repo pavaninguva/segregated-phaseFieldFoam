@@ -51,10 +51,39 @@ volScalarField rho
         mesh,
         IOobject::READ_IF_PRESENT
     ),
-    alpha1*rho1 + alpha2*rho2
+    0.5*(rho1*(1+alpha1) + rho2*(1-alpha1))
 );
 rho.oldTime();
 
+dimensionedScalar epsilon  
+(
+    transportProperties.lookup("epsilon")
+);
+
+dimensionedScalar lambda
+(
+    transportProperties.lookup("lambda")
+);
+
+dimensionedScalar chi 
+(
+    transportProperties.lookup("chi")
+);
+
+dimensionedScalar mobility
+(
+    dimensionedScalar(chi*(epsilon*epsilon))
+);
+
+dimensionedScalar nu1
+(
+    transportProperties.subDict("water").lookup("nu")
+);
+
+dimensionedScalar nu2
+(
+    transportProperties.subDict("air").lookup("nu")
+);
 
 // Mass flux
 surfaceScalarField rhoPhi
