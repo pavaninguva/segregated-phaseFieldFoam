@@ -237,6 +237,30 @@
     //     talphaPhi1Corr0.clear();
     // }
 
+    fvScalarMatrix alpha1Eqn
+    (
+        fvm::ddt(alpha1)
+        +fvm::div(alpha1, U)
+        ==
+        fvm::laplacian(mobility*lambda/pow(epsilon,2), pow(alpha1, 3))
+        - fvm::laplacian(mobility*lambda/pow(epsilon,2), alpha1)
+        - fvc::laplacian(mobility*lambda, fvc::laplacian(alpha1))
+    );
+
+    alpha1Eqn.solve();
+
+    Info<< "Phase-1 volume fraction = "
+        << alpha1.weightedAverage(mesh.Vsc()).value()
+        << "  Min(" << alpha1.name() << ") = " << min(alpha1).value()
+        << "  Max(" << alpha1.name() << ") = " << max(alpha1).value()
+        << endl;
+
+    tmp<surfaceScalarField> talphaPhi1UD(alpha1Eqn.flux());
+    
+    alphaPhi10 = talphaPhi1UD();
+
+    mixture.correct();
+
     #include "rhofs.H"
 
     if

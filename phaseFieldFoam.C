@@ -48,7 +48,8 @@ Description
 #include "turbulentTransportModel.H"
 #include "pimpleControl.H"
 #include "fvOptions.H"
-#include "CorrectPhi.H"
+//#include "CorrectPhi.H"
+#include "cfdTools/general/CorrectPhi/CorrectPhi.H"
 #include "fvcSmooth.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -149,7 +150,7 @@ int main(int argc, char *argv[])
             }
 
             #include "alphaControls.H"
-            #include "alphaEqnSubCycle.H"
+            // #include "alphaEqnSubCycle.H"
 
             mixture.correct();
 
